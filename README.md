@@ -89,6 +89,6 @@ To ensure the project is fully reproducible, the final GitHub repository will be
 4.  (Optional) Run the data collection script: `python scripts/01_fetch_data.py --username [your-chess.com-username]`
 5.  Open and run the `analysis.ipynb` notebook to see the complete analysis.
 
-## 7. Ethical Considerations
+## 6. Ethical Considerations
 
 This project uses my own publicly available data, minimizing privacy concerns. However, I will acknowledge the limitations of the analysis: the findings are specific to a single, amateur player and should not be generalized. The predictive model will be interpreted as a tool for self-assessment and learning, not as a definitive predictor of success. The use of the `chess.com` API will be done responsibly, respecting any rate limits to avoid disrupting their service.
