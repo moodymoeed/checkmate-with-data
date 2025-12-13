@@ -109,22 +109,72 @@ Both tests returned $p \approx 0$, leading to a **Strong Rejection of the Null H
 
 ---
 
-## 5. Future Directions (Machine Learning)
-The next phase (Theme C) involves building a predictive model.
-*   **Goal:** Predict game outcome (`Win` vs `Loss`) based on the board state at **Move 15**.
-*   **Proposed Features:**
-    *   Material Imbalance (Pawn value).
-    *   Piece Activity (Mobility score).
-    *   King Safety Index.
-    *   Time Advantage.
-*   **Algorithms:** Logistic Regression (Baseline) and Random Forest Classifier.
+## 5. Predictive Modeling (Machine Learning)
+
+**The Challenge:** Can AI predict if I will win based *only* on the board state at **Move 15**?
+*   *Constraint:* I removed `Rating Difference` from the training data to force the model to judge the *position*, not the *players*.
+
+### 5.1 Model Comparison
+I compared a linear baseline against complex tree-based models using 5-Fold Cross-Validation.
+
+*   **Logistic Regression:** ROC-AUC = **0.714**
+*   **Tuned XGBoost:** ROC-AUC = **0.690**
+*   **Tuned Random Forest:** ROC-AUC = **0.654**
+
+![Model Comparison](images/ml_2_model_comparison.png)
+
+**Conclusion:** The simpler model (**Logistic Regression**) won. This implies that my games are decided by **linear, cumulative advantages** (Material + Mobility) rather than complex, non-linear positional nuances that tree models look for.
+
+### 5.2 What Drives a Win?
+The Logistic Regression coefficients reveal the "Equation of Victory":
+
+![Coefficients](images/ml_1_coefficients.png)
+
+1.  **Material (Coeff > 1.0):** The dominant factor. Being up a pawn at Move 15 is the surest predictor of a win.
+2.  **Mobility:** Active pieces matter, but are secondary to raw material.
+3.  **Scotch Game:** This opening has a negative coefficient, statistically confirming it is a liability in my repertoire.
+
+### 5.3 Deep Dive: Evaluation & Interpretation
+To understand *how* the model predicts, I analyzed the errors using a **Confusion Matrix**. This reveals the "Human Element" of the games—specifically, where I deviated from statistical expectations.
+
+![Confusion Matrix](images/ml_4_confusion_matrix.png)
+
+#### The "Chess Translation" of Errors
+In this specific context, prediction errors have concrete chess meanings:
+*   **False Positive (Predicted Win $\to$ Actual Loss):** The model saw a winning board state (Material/Mobility advantage), but I lost.
+    *   *Chess Context:* These are **"Thrown Games"** or **Blunders**. I had the lead but failed to convert.
+*   **False Negative (Predicted Loss $\to$ Actual Win):** The model saw a losing board state, but I won.
+    *   *Chess Context:* These are **"Swindles"**. I fought back from a bad position, or the opponent blundered a winning advantage.
 
 ---
 
-## 6. How to Run
+### 5.4 Advanced Strategy: Threshold Tuning
+By default, the model predicts a Win if probability > 50%. However, I tuned this threshold to **0.20** (maximizing F1-Score) to see what happens when the model becomes "optimistic."
+
+| Metric | Standard Model (0.50) | Tuned Model (0.20) | Chess Interpretation |
+| :--- | :--- | :--- | :--- |
+| **Accuracy** | **65%** | 63% | The standard model is more realistic about the overall outcome. |
+| **Win Recall** | 64% | **100%** | The tuned model **never misses a winning chance**. It catches every single game I eventually won. |
+| **Loss Precision** | 65% | **100%** | **Critical Insight:** When the tuned model says "Loss", the position is statistically hopeless. I never recovered from these games. |
+| **Blunder Count** | 13 Games | **29 Games** | The tuned model highlights *potential*. It flagged 29 games where I had at least a 20% chance to win, but lost. |
+
+**Conclusion:**
+*   **The 0.50 Threshold** is the "Realist." It predicts the result based on my average conversion ability.
+*   **The 0.20 Threshold** is the "Coach." It highlights **Potential**. It shows that in 29 games I lost, I actually had a fightable position. This confirms that **tactical fragility** (throwing away positions) is a larger issue than opening knowledge.
+
+## 6. Conclusion & Future Work
+
+This project successfully applied Data Science to analyze chess performance.
+1.  **Tactics over Strategy:** The ML results prove that **Material** is the primary driver of my results.
+2.  **Schedule Matters:** Avoiding **Late Night Friday** games could instantly improve my average rating.
+3.  **Opening Repair:** The **Scotch Game** and **King's Knight Variation** are statistical weaknesses that need to be abandoned or restudied.
+
+---
+
+## 7. How to Run
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/[your-username]/checkmate-with-data.git
+    git clone https://github.com/moodymoeed/checkmate-with-data.git
     ```
 2.  **Create and activate environment:**
     ```bash
