@@ -1,10 +1,4 @@
 # Checkmate with Data: A Quantitative Analysis of Personal Chess Performance
-
-**Student:** Moeed ur Rehman  
-**Sabanci ID:** 36128  
-**Course:** DSA 210 - Introduction to Data Science  
-**Term:** Fall 2025  
-
 ---
 
 ## 1. Project Motivation
@@ -208,4 +202,4 @@ This project successfully applied Data Science to analyze chess performance.
 
 ---
 
-*This project was conducted for the Sabanci University DSA 210 Course.*
+*This project was conducted for the Sabanci University DSA 210 Course (Fall 2025).*
