@@ -161,8 +161,21 @@ By default, the model predicts a Win if probability > 50%. However, I tuned this
 **Conclusion:**
 *   **The 0.50 Threshold** is the "Realist." It predicts the result based on my average conversion ability.
 *   **The 0.20 Threshold** is the "Coach." It highlights **Potential**. It shows that in 29 games I lost, I actually had a fightable position. This confirms that **tactical fragility** (throwing away positions) is a larger issue than opening knowledge.
+ 
+ ---
 
-## 6. Conclusion & Future Work
+## 6. Interactive Dashboard (Streamlit App)
+
+As a final deliverable, I built an interactive web application to present these findings dynamically. The app features:
+*   **Project Story:** A guided tour through the rating trends, habits analysis, and key insights.
+*   **Interactive Sunburst:** A zoomable chart to explore the full depth of my opening repertoire.
+*   **Win Predictor Demo:** A live ML tool where users can input a board state (Material, Mobility, etc.) and get a real-time win probability from the trained Logistic Regression model.
+
+![App Preview](images/viz_sunburst_preview.png)
+
+---
+
+## 7. Conclusion & Future Work
 
 This project successfully applied Data Science to analyze chess performance.
 1.  **Tactics over Strategy:** The ML results prove that **Material** is the primary driver of my results.
@@ -171,7 +184,7 @@ This project successfully applied Data Science to analyze chess performance.
 
 ---
 
-## 7. How to Run
+## 8. How to Run
 1.  **Clone the repository:**
     ```bash
     git clone https://github.com/moodymoeed/checkmate-with-data.git
@@ -187,6 +200,11 @@ This project successfully applied Data Science to analyze chess performance.
     ```
 4.  **Run the analysis:**
     Open `analysis.ipynb` in Jupyter Lab or VS Code and execute cells.
+5.  **Run the Dashboard App:**
+    ```bash
+    streamlit run app.py
+    ```
+    The app will launch in your browser at `http://localhost:8501`.
 
 ---
 
