@@ -1,5 +1,4 @@
 # Checkmate with Data: A Quantitative Analysis of Personal Chess Performance
----
 
 ## 1. Project Motivation
 During the Summer of 2025, I dedicated significant time to playing Rapid Chess on Chess.com. Like many amateur players, I experienced periods of rapid improvement followed by frustrating stagnation. I often relied on intuition to assess my play ("I feel like I play worse at night," or "I think I'm bad with Black pieces").
